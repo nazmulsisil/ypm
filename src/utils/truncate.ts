@@ -3,5 +3,5 @@ export const truncate = (str: string, num?: number) => {
     return str
   }
 
-  return str.slice(0, num) + '...'
+  return str.slice(0, num)
 }

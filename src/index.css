@@ -70,7 +70,11 @@ a {
 
 /* [START] Utility classes */
 .me-2 {
-  margin-right: 0.5rem;
+  margin-right: 0.5rem !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
 }
 /* [END] Utility classes */
 
@@ -144,7 +148,6 @@ footer {
   border: 1px solid #ccc;
   padding: 1rem;
   border-radius: 0.5rem;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -197,6 +200,15 @@ footer {
 .note-item__required {
   color: red;
   margin-bottom: 1rem;
+}
+
+/* styles for show more / show less button link */
+.note-item__show-limit {
+  background-color: transparent;
+  padding: 0;
+  color: teal;
+  padding-left: 0.25rem;
+  text-decoration: underline;
 }
 /* [END] NoteItem */
 

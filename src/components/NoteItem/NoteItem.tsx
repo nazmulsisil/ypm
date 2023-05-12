@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form'
 import { useAppDispatch } from 'src/hooks/useAppDispatch'
 import { addNote, deleteNote, editNote } from 'src/features/notes/notesSlice'
 import { truncate } from 'src/utils/truncate'
+import classNames from 'classnames'
+
+const PREVIEW_LIMIT = 300
 
 interface NoteItemProps {
   note?: Note
@@ -22,7 +25,7 @@ export const NoteItem: React.FC<NoteItemProps> = ({
 
   const dispatch = useAppDispatch()
 
-  const [limit, setLimit] = useState<number | undefined>(300)
+  const [limit, setLimit] = useState<number | undefined>(PREVIEW_LIMIT)
   const [isEditMode, setIsEditMode] = useState(!!shouldCreate)
 
   const {
@@ -75,9 +78,28 @@ export const NoteItem: React.FC<NoteItemProps> = ({
     }
   })
 
+  const isNoteBodyBeyondLimit = noteBody.length > PREVIEW_LIMIT
+  const readOnlyBodyText = truncate(noteBody, limit)
+  const isTruncated = noteBody.length > readOnlyBodyText.length
+
+  const handleShowMore = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    setLimit(undefined)
+  }, [])
+
+  const handleShowLess = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    setLimit(PREVIEW_LIMIT)
+  }, [])
+
   return (
-    <div onClick={handleClick} className="note-item">
-      {isEditMode ? (
+    <div
+      onClick={handleClick}
+      className={classNames('note-item', {
+        ['cursor-pointer']: isNoteBodyBeyondLimit && isTruncated,
+      })}
+    >
+      {isEditMode && (
         <form className="note-item__form" onSubmit={handleSave}>
           <input
             {...register('title', { required: true })}
@@ -103,10 +125,36 @@ export const NoteItem: React.FC<NoteItemProps> = ({
             <button onClick={handleClickCancel}>Cancel</button>
           </div>
         </form>
-      ) : (
+      )}
+
+      {!isEditMode && (
         <>
           <h2 className="note-item__title">{noteTitle}</h2>
-          <p className="note-item__body">{truncate(noteBody, limit)}</p>
+          <p className="note-item__body">
+            {readOnlyBodyText}
+
+            {isNoteBodyBeyondLimit && (
+              <>
+                {isTruncated && (
+                  <button
+                    className="note-item__show-limit"
+                    onClick={handleShowMore}
+                  >
+                    show more
+                  </button>
+                )}
+
+                {!isTruncated && (
+                  <button
+                    className="note-item__show-limit"
+                    onClick={handleShowLess}
+                  >
+                    show less
+                  </button>
+                )}
+              </>
+            )}
+          </p>
           <div className="note-item__action">
             <button className="me-2" onClick={handleDelete}>
               Delete
