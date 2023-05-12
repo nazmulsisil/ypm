@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useState,
-  useEffect,
-  MouseEvent,
-  useRef,
-  MutableRefObject,
-} from 'react'
+import React, { useCallback, useState, useEffect, MouseEvent } from 'react'
 import { Note } from 'src/types'
 import { useForm } from 'react-hook-form'
 import { useAppDispatch } from 'src/hooks/useAppDispatch'
@@ -32,7 +25,12 @@ export const NoteItem: React.FC<NoteItemProps> = ({
   const [limit, setLimit] = useState<number | undefined>(300)
   const [isEditMode, setIsEditMode] = useState(!!shouldCreate)
 
-  const { register, handleSubmit, setValue } = useForm<Note>()
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Note>()
 
   useEffect(() => {
     setValue('title', noteTitle)
@@ -82,11 +80,15 @@ export const NoteItem: React.FC<NoteItemProps> = ({
       {isEditMode ? (
         <form className="note-item__form" onSubmit={handleSave}>
           <input
-            {...register('title')}
+            {...register('title', { required: true })}
             className="note-item__title note-item__input"
-            placeholder="Title"
+            placeholder="Title *"
             autoFocus
           />
+
+          {errors.title && (
+            <div className="note-item__required">This field is required</div>
+          )}
 
           <textarea
             {...register('body')}

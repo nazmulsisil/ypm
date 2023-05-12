@@ -193,6 +193,11 @@ footer {
   min-width: 100%;
   max-width: 100%;
 }
+
+.note-item__required {
+  color: red;
+  margin-bottom: 1rem;
+}
 /* [END] NoteItem */
 
 /* [START] NoteForm */

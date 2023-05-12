@@ -22,22 +22,16 @@ git clone https://github.com/nazmulsisil/ypm.git
 2. Navigate to the project folder:
 
 ```bash
-cd ypm-task
+cd ypm
 ```
 
-3. Checkout to the correct branch, for instance `main`.
-
-```bash
-git checkout main
-```
-
-4. Install the required packages using npm:
+3. Install the required packages using npm:
 
 ```bash
 npm install
 ```
 
-5. Run the project on your local machine:
+4. Run the project on your local machine:
 
 ```bash
 npm run dev
