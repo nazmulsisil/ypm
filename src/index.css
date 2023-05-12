@@ -92,6 +92,10 @@ button {
   height: 2.25rem;
 }
 
+button.btn-danger {
+  background: #dc3545;
+}
+
 header {
   padding: 1rem 0;
   display: flex;

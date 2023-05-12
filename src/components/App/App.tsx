@@ -20,8 +20,10 @@ export const App: React.FC = () => {
             <SearchBar />
             <SortControl />
           </div>
+
           <NoteForm />
           <NoteList />
+
           <Footer />
         </div>
       </PersistGate>

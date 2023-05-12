@@ -155,8 +155,9 @@ export const NoteItem: React.FC<NoteItemProps> = ({
               </>
             )}
           </p>
+
           <div className="note-item__action">
-            <button className="me-2" onClick={handleDelete}>
+            <button className="me-2 btn-danger" onClick={handleDelete}>
               Delete
             </button>
             <button onClick={handleEdit}>Edit</button>
